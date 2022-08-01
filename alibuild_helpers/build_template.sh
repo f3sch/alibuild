@@ -97,7 +97,7 @@ if [ -z "$CACHED_TARBALL" ]; then
     *)   # SOURCE0 is a relative path or URL, so clone/checkout the git repo from there.
       if cd "$SOURCEDIR" 2>/dev/null; then
         # Folder is already present, but check that it is the right tag
-        if ! git checkout -f "$GIT_TAG"; then
+        if ! git checkout  "$GIT_TAG"; then
           # If we can't find the tag, it might be new. Fetch tags and try again.
           git fetch -f "$SOURCE0" "refs/tags/$GIT_TAG:refs/tags/$GIT_TAG"
           git checkout -f "$GIT_TAG"
@@ -108,7 +108,7 @@ if [ -z "$CACHED_TARBALL" ]; then
         git clone -n $GIT_PARTIAL_CLONE_FILTER ${GIT_REFERENCE:+--reference "$GIT_REFERENCE"} "$SOURCE0" "$SOURCEDIR"
         cd "$SOURCEDIR"
         git remote set-url --push origin "$WRITE_REPO"
-        git checkout -f "$GIT_TAG"
+        git checkout "$GIT_TAG"
       fi ;;
   esac
 fi
